@@ -172,23 +172,28 @@ public class ElectricFragmentAdapter extends RecyclerView.Adapter<RecyclerView.V
                     final int privilege = MyApp.app.getPrivilege();
                     final int eleState = normalSmoke.getElectrState();
                     //if(privilege==3){//@@8.28权限3有切换电源功能
-                    switch (eleState){
-                        case 1:
-                            ((ItemViewHolder) holder).power_button.setVisibility(View.VISIBLE);
-                            ((ItemViewHolder) holder).power_button.setImageResource(R.drawable.sblb_qddy);
-                            break;
-                        case 2:
-                            ((ItemViewHolder) holder).power_button.setVisibility(View.VISIBLE);
-                            ((ItemViewHolder) holder).power_button.setImageResource(R.drawable.sblb_yqd);
-                            break;
-                        case 3:
-                            ((ItemViewHolder) holder).power_button.setVisibility(View.VISIBLE);
-                            ((ItemViewHolder) holder).power_button.setImageResource(R.drawable.sblb_szz);
-                            break;
-                        default:
-                            ((ItemViewHolder) holder).power_button.setVisibility(View.GONE);
-                            break;
+                    if(devType!=80&&devType!=81){
+                        switch (eleState){
+                            case 1:
+                                ((ItemViewHolder) holder).power_button.setVisibility(View.VISIBLE);
+                                ((ItemViewHolder) holder).power_button.setImageResource(R.drawable.sblb_qddy);
+                                break;
+                            case 2:
+                                ((ItemViewHolder) holder).power_button.setVisibility(View.VISIBLE);
+                                ((ItemViewHolder) holder).power_button.setImageResource(R.drawable.sblb_yqd);
+                                break;
+                            case 3:
+                                ((ItemViewHolder) holder).power_button.setVisibility(View.VISIBLE);
+                                ((ItemViewHolder) holder).power_button.setImageResource(R.drawable.sblb_szz);
+                                break;
+                            default:
+                                ((ItemViewHolder) holder).power_button.setVisibility(View.GONE);
+                                break;
+                        }
+                    }else{
+                        ((ItemViewHolder) holder).power_button.setVisibility(View.GONE);
                     }
+
                     ((ItemViewHolder) holder).power_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -206,7 +206,7 @@ public interface ApiStores {
                                           @Field("principal1Phone") String principal1Phone, @Field("principal2") String principal2,
                                           @Field("principal2Phone") String principal2Phone, @Field("areaId") String areaId,
                                           @Field("repeater") String repeater,@Field("camera") String camera,@Field("deviceType") String deviceType,
-                                          @Field("electrState") String electrState);
+                                          @Field("electrState") String electrState,@Field("image") String image);
 
     //添加烟感
     @FormUrlEncoded

@@ -222,7 +222,6 @@
                     android:layout_gravity="center"
                     android:background="@drawable/btn_shape"
                     android:text="安装图片"
-                    android:visibility="gone"
                     />
                 <ImageView
                     android:id="@+id/power_button"

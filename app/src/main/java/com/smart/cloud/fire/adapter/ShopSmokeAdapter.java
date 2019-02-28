@@ -540,6 +540,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 case 78:
                 case 70:
                 case 68:
+                case 47:
                 case 42:
                     if (netStates == 0) {//设备不在线。。
                         ((ItemViewHolder) holder).smoke_name_text.setText("水压探测器："+normalSmoke.getName()+"（已离线)");
@@ -555,6 +556,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                             Intent intent = new Intent(mContext, LineChartActivity.class);
                             intent.putExtra("electricMac",normalSmoke.getMac());
                             intent.putExtra("isWater","1");//@@是否为水压
+                            intent.putExtra("devType",normalSmoke.getDeviceType());
                             mContext.startActivity(intent);
                         }
                     });
@@ -599,6 +601,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     break;
                 case 124:
                 case 69:
+                case 48:
                 case 46:
                 case 44://万科水位
                 case 19://水位设备@@2018.01.02
@@ -615,7 +618,8 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         public void onClick(View v) {
                             Intent intent = new Intent(mContext, LineChartActivity.class);
                             intent.putExtra("electricMac",normalSmoke.getMac());
-                            intent.putExtra("isWater",normalSmoke.getDeviceType()+"");//@@是否为水压
+                            intent.putExtra("isWater",normalSmoke.getDeviceType()+"");
+                            intent.putExtra("devType",normalSmoke.getDeviceType());
                             mContext.startActivity(intent);
                         }
                     });

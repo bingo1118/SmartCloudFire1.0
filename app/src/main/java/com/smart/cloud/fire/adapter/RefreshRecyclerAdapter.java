@@ -292,6 +292,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     break;
                 case 124:
                 case 69:
+                case 48:
                 case 46:
                 case 44:
                 case 19:
@@ -410,6 +411,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 case 78:
                 case 70:
                 case 68:
+                case 47:
                 case 43:
                 case 42:
                 case 10://@@4.28
@@ -459,6 +461,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     }
                     break;
+                case 81:
                 case 80://南京优特电气
                 case 77:
                 case 76:
@@ -472,6 +475,9 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     ((ItemViewHolder) holder).smokeMac.setTextColor(mContext.getResources().getColor(R.color.hj_color_text));
                     ((ItemViewHolder) holder).smokeMacTv.setTextColor(mContext.getResources().getColor(R.color.hj_color_text));
                     switch (alarmType){
+                        case 74:
+                            ((ItemViewHolder) holder).alarmMarkImage.setImageResource(R.drawable.duanlu1);
+                            break;
                         case 204:
                             ((ItemViewHolder) holder).alarmMarkImage.setImageResource(R.drawable.shoubao);
                             break;

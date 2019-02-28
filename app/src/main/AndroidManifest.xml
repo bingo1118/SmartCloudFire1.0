@@ -93,7 +93,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/customBackground">
+            android:theme="@style/customBackground"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -197,7 +198,8 @@
         <activity android:name="com.smart.cloud.fire.mvp.fragment.ShopInfoFragment.WiredDevFragment.WiredSmokeListActivity" />
         <activity android:name="com.smart.cloud.fire.mvp.fragment.ShopInfoFragment.WiredDevFragment.WiredSmokeHistoryActivity" />
         <activity android:name="com.smart.cloud.fire.activity.Setting.MyZoomActivity" />
-        <activity android:name="com.smart.cloud.fire.activity.AllSmoke.AllSmokeActivity" />
+        <activity android:name="com.smart.cloud.fire.activity.AllSmoke.AllSmokeActivity"
+                   android:launchMode="singleTop"/>
         <activity
             android:name="com.smart.cloud.fire.ui.CallManagerDialogActivity"
             android:theme="@style/android:Theme.Holo.Dialog.NoActionBar">
@@ -219,22 +221,30 @@
         <activity android:name="com.smart.cloud.fire.activity.Map.MapActivity" />
         <activity
             android:name="com.smart.cloud.fire.activity.AddDev.AddDevActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:launchMode="singleTop"/>
         <activity android:name="com.smart.cloud.fire.activity.AlarmHistory.AlarmHistoryActivity" />
-        <activity android:name="com.smart.cloud.fire.activity.Electric.ElectricDevActivity" />
-        <activity android:name="com.smart.cloud.fire.activity.Camera.CameraDevActivity" />
-        <activity android:name="com.smart.cloud.fire.activity.WiredDev.WiredDevActivity" />
-        <activity android:name="com.smart.cloud.fire.activity.SecurityDev.SecurityDevActivity" />
+        <activity android:name="com.smart.cloud.fire.activity.Electric.ElectricDevActivity"
+                   android:launchMode="singleTop"/>
+        <activity android:name="com.smart.cloud.fire.activity.Camera.CameraDevActivity"
+                   android:launchMode="singleTop"/>
+        <activity android:name="com.smart.cloud.fire.activity.WiredDev.WiredDevActivity"
+                   android:launchMode="singleTop"/>
+        <activity android:name="com.smart.cloud.fire.activity.SecurityDev.SecurityDevActivity"
+                   android:launchMode="singleTop"/>
         <activity android:name="com.smart.cloud.fire.mvp.fragment.ShopInfoFragment.Security.AirInfoActivity" />
-        <activity android:name="com.smart.cloud.fire.activity.AddDev.ChioceDevTypeActivity" />
-        <activity android:name="com.smart.cloud.fire.activity.NFC.NFCActivity" />
+        <activity android:name="com.smart.cloud.fire.activity.AddDev.ChioceDevTypeActivity"
+                   android:launchMode="singleTop"/>
+        <activity android:name="com.smart.cloud.fire.activity.NFC.NFCActivity"
+                   android:launchMode="singleTop"/>
         <activity android:name="com.smart.cloud.fire.mvp.electricChangeHistory.ElectricChangeHistoryActivity" />
         <activity
             android:name="com.smart.cloud.fire.activity.AddNFC.AddNFCActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name="com.smart.cloud.fire.activity.NFCDev.NFCDevActivity" />
+        <activity android:name="com.smart.cloud.fire.activity.NFCDev.NFCDevActivity"
+                   android:launchMode="singleTop"/>
         <activity
             android:name="com.smart.cloud.fire.activity.UploadNFCInfo.UploadNFCInfoActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -248,7 +258,8 @@
         <activity
             android:name="com.smart.cloud.fire.activity.AddNFC.AddNFCMacActivity"
             android:launchMode="singleTop" />
-        <activity android:name="com.smart.cloud.fire.activity.Host.HostActivity" />
+        <activity android:name="com.smart.cloud.fire.activity.Host.HostActivity"
+                   android:launchMode="singleTop"/>
         <activity android:name="com.smart.cloud.fire.mvp.ChuangAn.ChuangAnActivity" />
         <activity android:name="com.smart.cloud.fire.activity.PayActivity" />
         <activity android:name="com.smart.cloud.fire.activity.THDevice.OneTHDevInfoActivity" />
