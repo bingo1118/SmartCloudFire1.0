@@ -19,6 +19,7 @@ import com.google.zxing.common.StringUtils;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.message.GTCmdMessage;
+import com.igexin.sdk.message.GTNotificationMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
 import com.smart.cloud.fire.activity.UploadAlarmInfo.UploadAlarmInfoActivity;
 import com.smart.cloud.fire.global.ConstantValues;
@@ -37,6 +38,7 @@ import com.smart.cloud.fire.retrofit.AppClient;
 import com.smart.cloud.fire.rxjava.ApiCallback;
 import com.smart.cloud.fire.rxjava.SubscriberCallBack;
 import com.smart.cloud.fire.utils.SharedPreferencesManager;
+import com.smart.cloud.fire.utils.T;
 import com.smart.cloud.fire.utils.TimeFormat;
 import com.smart.cloud.fire.utils.Utils;
 
@@ -706,6 +708,16 @@ public class DemoIntentService extends GTIntentService {
 
     }
 
+    @Override
+    public void onNotificationMessageArrived(Context context, GTNotificationMessage gtNotificationMessage) {
+
+    }
+
+    @Override
+    public void onNotificationMessageClicked(Context context, GTNotificationMessage gtNotificationMessage) {
+
+    }
+
 
     private void goToServer(String cid,String userId){
         ApiStores apiStores = AppClient.retrofit(ConstantValues.SERVER_PUSH).create(ApiStores.class);
@@ -718,10 +730,12 @@ public class DemoIntentService extends GTIntentService {
 
             @Override
             public void onFailure(int code, String msg) {
+                int a=code;
             }
 
             @Override
             public void onCompleted() {
+                int a=1;
 //                stopSelf();
             }
         }));
