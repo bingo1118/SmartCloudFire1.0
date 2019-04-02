@@ -88,12 +88,14 @@ public class ConfireFireFragmentPresenter extends BasePresenter<ConfireFireFragm
                 smokeMac = smokeMac.replace("Z","");
                 smokeMac = smokeMac.replace("U","");
                 smokeMac = smokeMac.replace("T","");
+                smokeMac = smokeMac.replace("H","");
                 break;
             case "G":
                 smokeMac = smokeMac.replace("G","");
                 break;
             case "S":
                 smokeMac = smokeMac.replace("S","");
+                smokeMac = smokeMac.replace("N","");
                 break;
             case "J":
                 smokeMac = smokeMac.replace("J","");
@@ -267,6 +269,10 @@ public class ConfireFireFragmentPresenter extends BasePresenter<ConfireFireFragm
             deviceType="51";//创安
         }else if(smokeMac.length()==16||smokeMac.length()==18){
             switch(macStr){
+                case "S":
+                    smokeMac = smokeMac.substring(1, smokeMac.length());//直连手报
+                    deviceType="8";
+                    break;
                 case "N":
                     smokeMac = smokeMac.substring(1, smokeMac.length());//直连设备
                     deviceType="41";
@@ -359,6 +365,10 @@ public class ConfireFireFragmentPresenter extends BasePresenter<ConfireFireFragm
                         electrState=1;;
                         deviceType="81";
                     }//@@lora优特电气设备
+                    if((smokeMac.charAt(smokeMac.length()-1)+"").equals("H")){
+                        electrState=1;;
+                        deviceType="83";
+                    }//@@南京中电电气设备
                     smokeMac = smokeMac.replace("Q","");//电气火灾
                     smokeMac = smokeMac.replace("S","");//电气火灾
                     smokeMac = smokeMac.replace("L","");//电气火灾
@@ -367,7 +377,8 @@ public class ConfireFireFragmentPresenter extends BasePresenter<ConfireFireFragm
                     smokeMac = smokeMac.replace("Z","");//电气火灾
                     smokeMac = smokeMac.replace("Y","");//电气火灾
                     smokeMac = smokeMac.replace("U","");//电气火灾
-                    smokeMac = smokeMac.replace("T","");//电气火灾T
+                    smokeMac = smokeMac.replace("T","");//电气火灾
+                    smokeMac = smokeMac.replace("H","");//电气火灾
                     break;
                 case "T":
                     if((smokeMac.charAt(smokeMac.length()-1)+"").equals("N")){
@@ -391,8 +402,13 @@ public class ConfireFireFragmentPresenter extends BasePresenter<ConfireFireFragm
                     deviceType="20";
                     break;
                 case "S":
+                    if((smokeMac.charAt(smokeMac.length()-1)+"").equals("N")){
+                        deviceType="84";
+                    }else{
+                        deviceType="8";
+                    }
                     smokeMac = smokeMac.replace("S","");//手动报警，显示 7
-                    deviceType="8";
+                    smokeMac = smokeMac.replace("N","");//手动报警，显示 7
                     break;
                 case "J":
                     smokeMac = smokeMac.replace("J","");//三江设备
@@ -478,8 +494,13 @@ public class ConfireFireFragmentPresenter extends BasePresenter<ConfireFireFragm
                     deviceType="15";
                     break;
                 case "P":
+                    if((smokeMac.charAt(smokeMac.length()-1)+"").equals("N")){
+                        deviceType="82";//2019.03.08NB直连喷淋
+                    }else{
+                        deviceType="18";
+                    }
                     smokeMac = smokeMac.replace("P","");//10.31喷淋
-                    deviceType="18";
+                    smokeMac = smokeMac.replace("N","");
                     electrState=2;//@@11.01 1开2关
                     break;
 //                case "C"://@@创安

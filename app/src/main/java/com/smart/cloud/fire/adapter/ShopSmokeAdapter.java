@@ -198,7 +198,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     customizeDialog.show();
                 }
             });
-            if(devType==18){
+            if(devType==18||devType==82){
                 ((ItemViewHolder) holder).state_name_tv.setVisibility(View.VISIBLE);
                 ((ItemViewHolder) holder).state_tv.setVisibility(View.VISIBLE);
                 if(normalSmoke.getElectrState()==1){
@@ -635,7 +635,8 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                     ((ItemViewHolder) holder).right_into_image.setVisibility(View.GONE);
                     break;
-                case 18://喷淋@@10.31。。
+                case 82://NB直连喷淋
+                case 18://喷淋@@10.31
                     if (netStates == 0) {//设备不在线。。
                         ((ItemViewHolder) holder).smoke_name_text.setText("喷淋："+normalSmoke.getName()+"（已离线)");
                         ((ItemViewHolder) holder).smoke_name_text.setTextColor(Color.RED);

@@ -108,7 +108,19 @@ public class ElectricActivityAdapterTest extends RecyclerView.Adapter<RecyclerVi
                     }
                     ((ItemViewHolder) holder).tvImage.setVisibility(View.VISIBLE);
                     ((ItemViewHolder) holder).electricLin.setVisibility(View.VISIBLE);
-                    ((ItemViewHolder) holder).electricName.setText("电压"+ElectricOne);
+                    switch (ElectricOne){
+                        case 1:
+                            ((ItemViewHolder) holder).electricName.setText("电压A");
+                            break;
+                        case 2:
+                            ((ItemViewHolder) holder).electricName.setText("电压B");
+                            break;
+                        case 3:
+                            ((ItemViewHolder) holder).electricName.setText("电压C" );
+                            break;
+
+                    }
+
                     if(electric.getElectricThreshold()!=null&&electric.getElectricThreshold().length()>0){
                         ((ItemViewHolder) holder).electricAlarmValue.setText(electric.getElectricThreshold()+"V");
                     }else{
@@ -139,7 +151,18 @@ public class ElectricActivityAdapterTest extends RecyclerView.Adapter<RecyclerVi
                         double electricThreshold = Double.parseDouble(electric.getElectricThreshold());
                         ((ItemViewHolder) holder).tvImage.setVisibility(View.VISIBLE);
                         ((ItemViewHolder) holder).electricLin.setVisibility(View.VISIBLE);
-                        ((ItemViewHolder) holder).electricName.setText("电流"+ElectricTwo);
+                        switch (ElectricTwo){
+                            case 1:
+                                ((ItemViewHolder) holder).electricName.setText("电流A");
+                                break;
+                            case 2:
+                                ((ItemViewHolder) holder).electricName.setText("电流B");
+                                break;
+                            case 3:
+                                ((ItemViewHolder) holder).electricName.setText("电流C");
+                                break;
+                        }
+
                         ((ItemViewHolder) holder).electricAlarmValue.setText(electricThreshold+ "A");
                         ((ItemViewHolder) holder).electricCurrentValue.setText(value7 + "A");
                         if (Double.parseDouble(value7) - electricThreshold > 0) {
@@ -188,7 +211,21 @@ public class ElectricActivityAdapterTest extends RecyclerView.Adapter<RecyclerVi
                         double electricThreshold = Double.parseDouble(electric.getElectricThreshold());
                         ((ItemViewHolder) holder).tvImage.setVisibility(View.VISIBLE);
                         ((ItemViewHolder) holder).electricLin.setVisibility(View.VISIBLE);
-                        ((ItemViewHolder) holder).electricName.setText("温度"+ElectricFour);
+                        switch (ElectricFour){
+                            case 1:
+                                ((ItemViewHolder) holder).electricName.setText("温度A");
+                                break;
+                            case 2:
+                                ((ItemViewHolder) holder).electricName.setText("温度B");
+                                break;
+                            case 3:
+                                ((ItemViewHolder) holder).electricName.setText("温度C");
+                                break;
+                            case 4:
+                                ((ItemViewHolder) holder).electricName.setText("温度N");
+                                break;
+                        }
+
                         ((ItemViewHolder) holder).electricAlarmValue.setText(electricThreshold+ "℃");
                         ((ItemViewHolder) holder).electricCurrentValue.setText(value97 + "℃");
                         if (Double.parseDouble(value97) - electricThreshold > 0) {
@@ -203,6 +240,55 @@ public class ElectricActivityAdapterTest extends RecyclerView.Adapter<RecyclerVi
                     }else{
                         break;
                     }//@@10.16防止出现空值
+                }
+                break;
+            case 10:
+                String value10 = electric.getValue();
+                if (value10.length() > 0) {
+//                    ElectricOne = ElectricOne+1;
+                    ElectricOne=electric.getId();//@@2018.01.22
+                    String[] electricThreshold = electric.getElectricThreshold().split("\\\\");
+                    String electricThresholdOne =null;
+                    String electricThresholdTwo= null;
+                    if(electricThreshold.length==2){
+                        electricThresholdOne = electricThreshold[0];
+                        electricThresholdTwo=electricThreshold[1];
+                    }else{
+                        electricThresholdTwo=electricThreshold[0];
+                    }
+                    ((ItemViewHolder) holder).tvImage.setVisibility(View.VISIBLE);
+                    ((ItemViewHolder) holder).electricLin.setVisibility(View.VISIBLE);
+                    switch (ElectricOne){
+                        case 1:
+                            ((ItemViewHolder) holder).electricName.setText("电压AB");
+                            break;
+                        case 2:
+                            ((ItemViewHolder) holder).electricName.setText("电压BC");
+                            break;
+                        case 3:
+                            ((ItemViewHolder) holder).electricName.setText("电压CA");
+                            break;
+                    }
+
+                    if(electric.getElectricThreshold()!=null&&electric.getElectricThreshold().length()>0){
+                        ((ItemViewHolder) holder).electricAlarmValue.setText(electric.getElectricThreshold()+"V");
+                    }else{
+                        break;
+                    }//@@10.16防止出现空值
+                    ((ItemViewHolder) holder).electricCurrentValue.setText(value10 + "V");
+                    if (Double.parseDouble(value10) - Double.parseDouble(electricThresholdTwo) > 0) {
+                        ((ItemViewHolder) holder).electricCurrentValue.setTextColor(Color.rgb(224, 47, 27));
+                        ((ItemViewHolder) holder).electricStates.setTextColor(Color.rgb(224, 47, 27));
+                        ((ItemViewHolder) holder).electricStates.setText("高压");
+                    } else if (electricThresholdOne!=null&&Double.parseDouble(value10) - Double.parseDouble(electricThresholdOne) < 0) {
+                        ((ItemViewHolder) holder).electricCurrentValue.setTextColor(Color.rgb(224, 47, 27));
+                        ((ItemViewHolder) holder).electricStates.setTextColor(Color.rgb(224, 47, 27));
+                        ((ItemViewHolder) holder).electricStates.setText("欠压");
+                    } else {
+                        ((ItemViewHolder) holder).electricCurrentValue.setTextColor(Color.rgb(18, 184, 245));
+                        ((ItemViewHolder) holder).electricStates.setTextColor(Color.rgb(18, 184, 245));
+                        ((ItemViewHolder) holder).electricStates.setText("正常");
+                    }
                 }
                 break;
         }

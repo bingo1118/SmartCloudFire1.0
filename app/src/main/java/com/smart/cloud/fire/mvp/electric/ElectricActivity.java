@@ -85,6 +85,9 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
     private String yuzhi45="";
     private String yuzhi46="";
     private String yuzhi47="0";
+    private String yuzhi47b="0";
+    private String yuzhi47c="0";
+    private String yuzhi47n="0";
 
     private ElectricEnergyEntity energyEntity;
 
@@ -127,6 +130,15 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
             MenuItem item=popupMenu.getMenu().findItem(R.id.electr_yuzhi_set);
             item.setVisible(false);
         }
+        if(!(devType==83||devType==80||devType==81)){
+            MenuItem item=popupMenu.getMenu().findItem(R.id.fenli);
+            item=popupMenu.getMenu().findItem(R.id.race);
+            item.setVisible(false);
+        }
+        if(devType!=83){
+            MenuItem item=popupMenu.getMenu().findItem(R.id.electr_yuzhi_set_zd);
+            item.setVisible(false);
+        }
         if(devType!=52&&devType!=53&&devType!=75&&devType!=77){
             MenuItem item=popupMenu.getMenu().findItem(R.id.yuzhi_set);
             item.setVisible(false);
@@ -139,8 +151,6 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
             item=popupMenu.getMenu().findItem(R.id.clear_voice);
             item.setVisible(false);
             item=popupMenu.getMenu().findItem(R.id.reset);
-            item.setVisible(false);
-            item=popupMenu.getMenu().findItem(R.id.race);
             item.setVisible(false);
         }else{
             MenuItem item=popupMenu.getMenu().findItem(R.id.change_history);
@@ -156,6 +166,9 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.electr_yuzhi_set_zd:
+                        gotoElectrYuzhiSetZd();
+                        break;
                     case R.id.electr_yuzhi_set:
                         gotoElectrYuzhiSet();
                         break;
@@ -200,6 +213,131 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
         });
 
         popupMenu.show();
+    }
+
+    private void gotoElectrYuzhiSetZd() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout= inflater.inflate(R.layout.electr_yuzhi_setting_zd,(ViewGroup) findViewById(R.id.rela));
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(mContext).setView(layout);
+        final AlertDialog dialog =builder.create();
+        final EditText high_value=(EditText)layout.findViewById(R.id.high_value);
+        high_value.setText(yuzhi43);
+        final EditText low_value=(EditText)layout.findViewById(R.id.low_value);
+        low_value.setText(yuzhi44);
+        final EditText overcurrentvalue=(EditText)layout.findViewById(R.id.overcurrentvalue);
+        overcurrentvalue.setText(yuzhi45);
+        final EditText Leakage_value=(EditText)layout.findViewById(R.id.Leakage_value);
+        Leakage_value.setText(yuzhi46);
+        final EditText Temp1_value=(EditText)layout.findViewById(R.id.Temp1_value);
+        Leakage_value.setText(yuzhi47);
+        final EditText Temp2_value=(EditText)layout.findViewById(R.id.Temp2_value);
+        Leakage_value.setText(yuzhi47);
+        final EditText Temp3_value=(EditText)layout.findViewById(R.id.Temp3_value);
+        Leakage_value.setText(yuzhi47);
+        final EditText Temp4_value=(EditText)layout.findViewById(R.id.Temp4_value);
+        Leakage_value.setText(yuzhi47);
+
+
+        Button commit=(Button)layout.findViewById(R.id.commit);
+        commit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url="";
+                try{
+                    int high=(int)Float.parseFloat(high_value.getText().toString());
+                    int low=(int)Float.parseFloat(low_value.getText().toString());
+                    float value45=Float.parseFloat(overcurrentvalue.getText().toString());
+                    int value46=(int)Float.parseFloat(Leakage_value.getText().toString());
+                    int value47_1=(int)Float.parseFloat(Temp1_value.getText().toString());
+                    int value47_2=(int)Float.parseFloat(Temp2_value.getText().toString());
+                    int value47_3=(int)Float.parseFloat(Temp3_value.getText().toString());
+                    int value47_4=(int)Float.parseFloat(Temp4_value.getText().toString());
+
+                    if(low<66||low>208){
+                        T.showShort(mContext,"欠压阈值设置范围为66-208V");
+                        return;
+                    }
+                    if(high<220||high>329){
+                        T.showShort(mContext,"过压阈值设置范围为220-329V");
+                        return;
+                    }
+                    if(value45<1||value45>800){
+                        T.showShort(mContext,"过流阈值设置范围为1-800A");
+                        return;
+                    }
+                    if(value46<20||value46>2000){
+                        T.showShort(mContext,"漏电流阈值设置范围为20-2000mA");
+                        return;
+                    }
+                    if(low>high){
+                        T.showShort(mContext,"欠压阈值不能高于过压阈值");
+                        return;
+                    }
+
+                    if(value47_1<45||value47_1>140||value47_2<45||value47_2>140||value47_3<45||value47_3>140||value47_4<45||value47_4>140){
+                        T.showShort(mContext,"温度阈值设置范围为45-140℃");
+                        return;
+                    }
+
+                    int b=0;
+
+                    url= ConstantValues.SERVER_IP_NEW+"nanjing_zhongdian350?imeiValue="+electricMac+"&Overvoltage="+high_value.getText().toString()
+                            +"&Undervoltage="+low_value.getText().toString()
+                            +"&Overcurrent="+value45
+                            +"&Leakage_current="+value46
+                            +"&deviceType="+83+"&Temperature1="+value47_1
+                            +"&Temperature2="+value47_2
+                            +"&Temperature3="+value47_3
+                            +"&Temperature4="+value47_4;
+
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                    T.showShort(mContext,"输入数据不完全或有误");
+                    return;
+                }
+                final ProgressDialog dialog1 = new ProgressDialog(mContext);
+                dialog1.setTitle("提示");
+                dialog1.setMessage("设置中，请稍候");
+                dialog1.setCanceledOnTouchOutside(false);
+                dialog1.show();
+                VolleyHelper helper=VolleyHelper.getInstance(mContext);
+                RequestQueue mQueue = helper.getRequestQueue();
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    int errorCode=response.getInt("errorCode");
+                                    if(errorCode==0){
+                                        T.showShort(mContext,"设置命令下发成功，请稍后刷新");
+                                        electricPresenter.getOneElectricInfo(userID,privilege+"",devType+"",electricMac,false);
+                                    }else{
+                                        T.showShort(mContext,"设置失败");
+                                    }
+                                    getYuzhi(electricMac);
+                                    getFenli(electricMac);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                dialog1.dismiss();
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        T.showShort(mContext,"网络错误");
+                        dialog1.dismiss();
+                    }
+                });
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(300000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                mQueue.add(jsonObjectRequest);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void gotoElectrYuzhiSet() {
@@ -407,6 +545,9 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
                                 yuzhi45=response.getString("value45");
                                 yuzhi46=response.getString("value46");
                                 yuzhi47=response.getString("value47");
+                                yuzhi47b=response.getString("value47b");
+                                yuzhi47c=response.getString("value47c");
+                                yuzhi47n=response.getString("value47n");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -568,6 +709,10 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
                     }
                     if(value46<10||value46>1000){
                         T.showShort(mContext,"漏电流阈值设置范围为10-1000mA");
+                        return;
+                    }
+                    if(value47>100){
+                        T.showShort(mContext,"温度阈值设置范围为0-100℃");
                         return;
                     }
                     if(low>high){
@@ -1087,25 +1232,25 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
         final TextView ActivePowerB=(TextView)layout.findViewById(R.id.ActivePowerB);
         final TextView ActivePowerC=(TextView)layout.findViewById(R.id.ActivePowerC);
 
-        ActivePowerA.setText(energyEntity.getActivePowerA());
-        ActivePowerB.setText(energyEntity.getActivePowerB());
-        ActivePowerC.setText(energyEntity.getActivePowerC());
+        ActivePowerA.setText(energyEntity.getActivePowerA()+"W");
+        ActivePowerB.setText(energyEntity.getActivePowerB()+"W");
+        ActivePowerC.setText(energyEntity.getActivePowerC()+"W");
 
         final TextView ReactivePowerA=(TextView)layout.findViewById(R.id.ReactivePowerA);
         final TextView ReactivePowerB=(TextView)layout.findViewById(R.id.ReactivePowerB);
         final TextView ReactivePowerC=(TextView)layout.findViewById(R.id.ReactivePowerC);
 
-        ReactivePowerA.setText(energyEntity.getReactivePowerA());
-        ReactivePowerB.setText(energyEntity.getReactivePowerB());
-        ReactivePowerC.setText(energyEntity.getReactivePowerC());
+        ReactivePowerA.setText(energyEntity.getReactivePowerA()+"var");
+        ReactivePowerB.setText(energyEntity.getReactivePowerB()+"var");
+        ReactivePowerC.setText(energyEntity.getReactivePowerC()+"var");
 
         final TextView ApparentPowerA=(TextView)layout.findViewById(R.id.ApparentPowerA);
         final TextView ApparentPowerB=(TextView)layout.findViewById(R.id.ApparentPowerB);
         final TextView ApparentPowerC=(TextView)layout.findViewById(R.id.ApparentPowerC);
 
-        ApparentPowerA.setText(energyEntity.getApparentPowerA());
-        ApparentPowerB.setText(energyEntity.getApparentPowerB());
-        ApparentPowerC.setText(energyEntity.getApparentPowerC());
+        ApparentPowerA.setText(energyEntity.getApparentPowerA()+"VA");
+        ApparentPowerB.setText(energyEntity.getApparentPowerB()+"VA");
+        ApparentPowerC.setText(energyEntity.getApparentPowerC()+"VA");
 
         final TextView PowerFactorA=(TextView)layout.findViewById(R.id.PowerFactorA);
         final TextView PowerFactorB=(TextView)layout.findViewById(R.id.PowerFactorB);
@@ -1119,25 +1264,31 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
         final TextView ActiveEnergyB=(TextView)layout.findViewById(R.id.ActiveEnergyB);
         final TextView ActiveEnergyC=(TextView)layout.findViewById(R.id.ActiveEnergyC);
 
-        ActiveEnergyA.setText(energyEntity.getActiveEnergyA());
-        ActiveEnergyB.setText(energyEntity.getActiveEnergyB());
-        ActiveEnergyC.setText(energyEntity.getActiveEnergyC());
+        ActiveEnergyA.setText(energyEntity.getActiveEnergyA()+"kWh");
+        ActiveEnergyB.setText(energyEntity.getActiveEnergyB()+"kWh");
+        ActiveEnergyC.setText(energyEntity.getActiveEnergyC()+"kWh");
 
         final TextView ReactiveEnergyA=(TextView)layout.findViewById(R.id.ReactiveEnergyA);
         final TextView ReactiveEnergyB=(TextView)layout.findViewById(R.id.ReactiveEnergyB);
         final TextView ReactiveEnergyC=(TextView)layout.findViewById(R.id.ReactiveEnergyC);
 
-        ReactiveEnergyA.setText(energyEntity.getReactiveEnergyA());
-        ReactiveEnergyB.setText(energyEntity.getReactiveEnergyB());
-        ReactiveEnergyC.setText(energyEntity.getReactiveEnergyC());
+        ReactiveEnergyA.setText(energyEntity.getReactiveEnergyA()+"kvarh");
+        ReactiveEnergyB.setText(energyEntity.getReactiveEnergyB()+"kvarh");
+        ReactiveEnergyC.setText(energyEntity.getReactiveEnergyC()+"kvarh");
 
         final TextView ApparentEnergyA=(TextView)layout.findViewById(R.id.ApparentEnergyA);
         final TextView ApparentEnergyB=(TextView)layout.findViewById(R.id.ApparentEnergyB);
         final TextView ApparentEnergyC=(TextView)layout.findViewById(R.id.ApparentEnergyC);
 
-        ApparentEnergyA.setText(energyEntity.getApparentEnergyA());
-        ApparentEnergyB.setText(energyEntity.getApparentEnergyB());
-        ApparentEnergyC.setText(energyEntity.getApparentEnergyC());
+        ApparentEnergyA.setText(energyEntity.getApparentEnergyA()+"kVAh");
+
+
+
+
+
+
+        ApparentEnergyB.setText(energyEntity.getApparentEnergyB()+"kVAh");
+        ApparentEnergyC.setText(energyEntity.getApparentEnergyC()+"kVAh");
 
         dialog.show();
     }

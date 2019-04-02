@@ -355,7 +355,7 @@ public class LineChartActivity extends MvpActivity<LineChartPresenter> implement
                                 threshold_h=response.getString("value208");
                                 threshold_l=response.getString("value207");
                                 try {
-                                    getdatatime=response.getString("askTimes");
+                                    getdatatime=response.getString("ackTimes");
                                     uploaddatatime=response.getString("waveValue");
                                 }catch (JSONException e) {
                                     e.printStackTrace();
@@ -489,7 +489,7 @@ public class LineChartActivity extends MvpActivity<LineChartPresenter> implement
         axisX.setTextColor(Color.GRAY);//X轴灰色
         axisX.setMaxLabelChars(3);
         axisX.setValues(axisValuesX);
-        axisX.setHasTiltedLabels(true);
+        axisX.setHasTiltedLabels(true);//X坐标轴字体是斜的显示还是直的，true是斜的显示
         axisX.setTextSize(10);
         axisX.setInside(true);
         axisY.setTextColor(Color.GRAY);

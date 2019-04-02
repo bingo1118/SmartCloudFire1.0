@@ -157,6 +157,7 @@ public class DemoIntentService extends GTIntentService {
                 case 73://南京7020燃气
                 case 78://南京普通水压
                 case 79://南京温湿度
+                case 82://NB直连喷淋
                 case 111://@@小主机，终端
                 case 119://联动烟感
                 case 124://@@外接水位
@@ -284,9 +285,10 @@ public class DemoIntentService extends GTIntentService {
                                 message="发生未知类型报警";
                             }
                             break;
+                        case 82:
                         case 18://@@10.31 喷淋
                             if(alarmType==202||alarmType==66||alarmType==203) {
-                                message="发生报警";
+                                message="阀门开启";
                             }else if(alarmType==201){
                                 message="阀门已关闭";
                             } else if(alarmType==193){
@@ -332,7 +334,11 @@ public class DemoIntentService extends GTIntentService {
                             message="声光发出报警";
                             break;
                         case 8:
-                            message="手动报警";
+                            if(alarmType==193){
+                                message="低电压报警";
+                            }else{
+                                message="手动报警";
+                            }
                             break;
                         case 11:
                             if(alarmType==202||alarmType==206) {
@@ -407,6 +413,7 @@ public class DemoIntentService extends GTIntentService {
                         context.startActivity(intent1);
                     }
                     break;
+                case 83://南京中电电气
                 case 81://lora优特电气
                 case 80://南京优特电气
                 case 77://南京三相电气
@@ -466,6 +473,15 @@ public class DemoIntentService extends GTIntentService {
                             }else{
                                 alarmMsg = "电气探测器发出：过压报警（测试）";
                             }
+                            break;
+                        case 74:
+                            alarmMsg = "电气探测器发出：开路故障";
+                            break;
+                        case 138:
+                            alarmMsg = "电气探测器发出：温度探头故障";
+                            break;
+                        case 137:
+                            alarmMsg = "电气探测器发出：剩余电流探头故障";
                             break;
                         case 136:
                         case 36:
