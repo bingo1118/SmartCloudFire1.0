@@ -222,6 +222,9 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });
             switch (devType){
+                case 89:
+                case 87:
+                case 86:
                 case 61://@@嘉德南京烟感
                 case 58://@@嘉德移动烟感
                 case 41://@@NB烟感
@@ -256,6 +259,9 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                                     break;
                                 case 61:
                                     call=apiStores1.nanjing_jiade_cancel(normalSmoke.getMac(),"61");
+                                    break;
+                                case 86:
+                                    call=apiStores1.nanjing_jiade_cancel(normalSmoke.getMac(),"86");
                                     break;
                             }
                             if (call != null) {
@@ -600,6 +606,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     });
                     break;
                 case 124:
+                case 85:
                 case 69:
                 case 48:
                 case 46:

@@ -244,7 +244,7 @@ public class ElectricActivityAdapterTest extends RecyclerView.Adapter<RecyclerVi
                 break;
             case 10:
                 String value10 = electric.getValue();
-                if (value10.length() > 0) {
+                if (value10!=null&&value10.length() > 0) {
 //                    ElectricOne = ElectricOne+1;
                     ElectricOne=electric.getId();//@@2018.01.22
                     String[] electricThreshold = electric.getElectricThreshold().split("\\\\");

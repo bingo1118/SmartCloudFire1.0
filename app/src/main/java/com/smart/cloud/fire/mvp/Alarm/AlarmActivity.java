@@ -61,7 +61,7 @@ public class AlarmActivity extends MvpActivity<AlarmPresenter> implements AlarmV
     @Bind(R.id.alarm_fk_img)
     MyImageView alarmFkImg;
     @Bind(R.id.alarm_music_image)
-    ImageView alarmMusicImage;
+    Button alarmMusicImage;
     @Bind(R.id.alarm_lead_to_btn)
     Button alarmLeadToBtn;
     @Bind(R.id.alarm_type)
@@ -406,11 +406,11 @@ public class AlarmActivity extends MvpActivity<AlarmPresenter> implements AlarmV
                             "closealarmvoice",
                             System.currentTimeMillis());//@@
                     MusicManger.getInstance().stop();
-                    alarmMusicImage.setImageResource(R.drawable.bj_yl_jy);
+//                    alarmMusicImage.setImageResource(R.drawable.bj_yl_jy);
                     musicOpenOrClose = false;
                 } else {
                     MusicManger.getInstance().playAlarmMusic(mContext);
-                    alarmMusicImage.setImageResource(R.drawable.bj_yl);
+//                    alarmMusicImage.setImageResource(R.drawable.bj_yl);
                     musicOpenOrClose = true;
                 }
                 break;

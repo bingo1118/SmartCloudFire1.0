@@ -14,15 +14,14 @@ import android.os.Vibrator;
 import android.widget.RemoteViews;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.hikvision.open.hikvideoplayer.HikVideoPlayerFactory;
 import com.p2p.core.update.UpdateManager;
 import com.smart.cloud.fire.service.LocationService;
 import com.smart.cloud.fire.ui.ForwardDownActivity;
+import com.smart.cloud.fire.utils.CrashHandler;
 import com.smart.cloud.fire.utils.SharedPreferencesManager;
 import com.smart.cloud.fire.utils.T;
 import com.squareup.leakcanary.LeakCanary;
-import com.taobao.sophix.PatchStatus;
-import com.taobao.sophix.SophixManager;
-import com.taobao.sophix.listener.PatchLoadStatusListener;
 
 import org.litepal.LitePal;
 
@@ -50,12 +49,13 @@ public class MyApp extends Application {
         mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
         SDKInitializer.initialize(this);
         //启动集错程序
-//        CrashHandler crashHandler = CrashHandler.getInstance();
-//        crashHandler.init(this);
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
         //检查内存是否泄漏初始化，正式版应该关闭
         LeakCanary.install(this);
         LitePal.initialize(this);//数据库框架
         SQLiteDatabase db = LitePal.getDatabase();
+        HikVideoPlayerFactory.initLib(null, true);
     }
 
     @Override

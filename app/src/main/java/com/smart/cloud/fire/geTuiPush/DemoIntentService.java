@@ -15,7 +15,6 @@ import android.support.v4.app.NotificationCompat;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.google.zxing.common.StringUtils;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.message.GTCmdMessage;
@@ -158,6 +157,10 @@ public class DemoIntentService extends GTIntentService {
                 case 78://南京普通水压
                 case 79://南京温湿度
                 case 82://NB直连喷淋
+                case 85://南京普通水位
+                case 86://塞特维尔南京烟感
+                case 87://三江HN388烟感
+                case 89://塞特维尔移动烟感
                 case 111://@@小主机，终端
                 case 119://联动烟感
                 case 124://@@外接水位
@@ -207,6 +210,9 @@ public class DemoIntentService extends GTIntentService {
                             }
                             break;
                         case 119:
+                        case 89:
+                        case 87:
+                        case 86:
                         case 41:
                         case 61:
                         case 58:
@@ -257,6 +263,7 @@ public class DemoIntentService extends GTIntentService {
                             }
                             break;
                         case 124:
+                        case 85:
                         case 69:
                         case 48:
                         case 46:
@@ -814,7 +821,7 @@ public class DemoIntentService extends GTIntentService {
         m_builder.setWhen(System.currentTimeMillis());
         m_builder.setAutoCancel(true);
         long[] vibrates = {0, 1000, 1000, 1000};
-        m_builder.mNotification.vibrate = vibrates;
+        m_builder.getNotification().vibrate = vibrates;
         if(clazz!=null){
             m_builder.setContentText("点击查看详情"); //设置主要内容
             //通知消息与Intent关联

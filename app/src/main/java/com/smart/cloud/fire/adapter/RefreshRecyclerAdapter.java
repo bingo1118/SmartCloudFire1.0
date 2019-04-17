@@ -177,6 +177,9 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
             int devType= mNormalAlarmMessage.getDeviceType();
             switch (devType){
+                case 89:
+                case 87:
+                case 86:
                 case 61:
                 case 58:
                 case 56:
@@ -291,6 +294,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                     break;
                 case 124:
+                case 85:
                 case 69:
                 case 48:
                 case 46:

@@ -24,7 +24,7 @@ package com.smart.cloud.fire.global;
 //    public static final String SERVER_IP_NEW ="http://193.112.231.227:51091/vanke/";
 
 
-//    public static final String SERVER_IP_NEW ="http://193.112.150.195:51091/fireSystem/";
+//    public static final String SERVER_IP_NEW ="http://193.112.150.195:51999/fireSystem/";
 //    public static final String SERVER_IP_NEW ="http://192.168.4.88:51091/fireSystem/";
     //测试IP:
     public static final String SERVER_IP_NEW_TEST="http://119.29.224.28:51090/fireSystem/";

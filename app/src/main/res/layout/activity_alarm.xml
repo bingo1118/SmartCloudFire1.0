@@ -21,14 +21,16 @@
             android:scaleType="center"
             android:layout_centerInParent="true"
             />
-        <ImageView
+        <Button
             android:id="@+id/alarm_music_image"
-            android:layout_width="35dp"
+            android:layout_width="60dp"
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="200dp"
             android:layout_marginRight="15dp"
-            android:src="@drawable/bj_yl"/>
+            android:text="静音"
+            android:background="@drawable/jingyin_btn_shape"
+            android:textColor="@color/white"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -55,7 +57,7 @@
             android:layout_marginRight="10dp"
             android:visibility="gone"
             android:background="@drawable/login_button_selector"
-            android:text="消音" />
+            android:text="设备消音" />
         <Button
             android:id="@+id/make_sure_upload_btn"
             android:layout_width="80dp"

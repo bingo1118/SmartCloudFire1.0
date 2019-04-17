@@ -138,6 +138,8 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
         if(devType!=83){
             MenuItem item=popupMenu.getMenu().findItem(R.id.electr_yuzhi_set_zd);
             item.setVisible(false);
+            item=popupMenu.getMenu().findItem(R.id.electr_yuzhi_set_refresh);
+            item.setVisible(false);
         }
         if(devType!=52&&devType!=53&&devType!=75&&devType!=77){
             MenuItem item=popupMenu.getMenu().findItem(R.id.yuzhi_set);
@@ -166,6 +168,9 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.electr_yuzhi_set_refresh:
+                        gotoYuzhiRefresh();
+                        break;
                     case R.id.electr_yuzhi_set_zd:
                         gotoElectrYuzhiSetZd();
                         break;
@@ -213,6 +218,39 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
         });
 
         popupMenu.show();
+    }
+
+    private void gotoYuzhiRefresh() {
+        String url= ConstantValues.SERVER_IP_NEW+"Tthroald_zhongdian350?imeiValue="+electricMac+"&deviceType=83&Undervoltage=1&Overvoltage=1&Overcurrent=1&Leakage_current=1&Temperature1=1&Temperature2=1&Temperature3=1&Temperature4=1";
+        VolleyHelper helper=VolleyHelper.getInstance(mContext);
+        RequestQueue mQueue = helper.getRequestQueue();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            int errorCode=response.getInt("errorCode");
+                            if(errorCode==0){
+                                T.showShort(mContext,"设置成功");
+                            }else{
+                                T.showShort(mContext,"设置失败");
+                            }
+                            getYuzhi(electricMac);
+                            getFenli(electricMac);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                T.showShort(mContext,"网络错误");
+            }
+        });
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(300000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mQueue.add(jsonObjectRequest);
     }
 
     private void gotoElectrYuzhiSetZd() {
