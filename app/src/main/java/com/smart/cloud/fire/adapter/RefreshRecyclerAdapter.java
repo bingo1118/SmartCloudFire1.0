@@ -177,6 +177,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
             int devType= mNormalAlarmMessage.getDeviceType();
             switch (devType){
+                case 92:
                 case 89:
                 case 87:
                 case 86:
@@ -294,6 +295,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                     break;
                 case 124:
+                case 95:
                 case 85:
                 case 69:
                 case 48:
@@ -327,6 +329,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         ((ItemViewHolder) holder).smokeMacTv.setTextColor(mContext.getResources().getColor(R.color.hj_color_text));
                     }
                     break;
+                case 90:
                 case 82://NB
                 case 18://@@10.31 喷淋
                     ((ItemViewHolder) holder).smokeMac.setText("喷淋:");
@@ -384,6 +387,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         ((ItemViewHolder) holder).smokeMacTv.setTextColor(mContext.getResources().getColor(R.color.hj_color_text));
                     }
                     break;
+                case 93:
                 case 73:
                 case 72:
                 case 16:
@@ -413,6 +417,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     ((ItemViewHolder) holder).smokeMacTv.setTextColor(mContext.getResources().getColor(R.color.hj_color_text));
                     break;
                 case 125:
+                case 94:
                 case 78:
                 case 70:
                 case 68:
@@ -466,6 +471,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     }
                     break;
+                case 91:
                 case 83://南京中电电气
                 case 81:
                 case 80://南京优特电气

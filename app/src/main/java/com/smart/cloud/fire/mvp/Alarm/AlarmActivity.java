@@ -151,10 +151,15 @@ public class AlarmActivity extends MvpActivity<AlarmPresenter> implements AlarmV
      * 根据推送过来的PushAlarmMsg对象填充数据。。
      */
     private void init() {
-        final String uploadpeople=mPushAlarmMsg.getUploadpeople();
+        String uploadpeople="";
+        if(mPushAlarmMsg!=null){
+            uploadpeople=mPushAlarmMsg.getUploadpeople();
+        }
+
         if(uploadpeople!=null&&uploadpeople.length()>0){
             alarm_tb_image.setImageResource(R.drawable.upload_alarm);
             makesure_getalarm.setVisibility(View.VISIBLE);
+            final String finalUploadpeople = uploadpeople;
             makesure_getalarm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -163,7 +168,7 @@ public class AlarmActivity extends MvpActivity<AlarmPresenter> implements AlarmV
                     String userid= SharedPreferencesManager.getInstance().getData(mContext,
                             SharedPreferencesManager.SP_FILE_GWELL,
                             SharedPreferencesManager.KEY_RECENTNAME);
-                    String url= ConstantValues.SERVER_IP_NEW+"makeSureGetUpload?userId="+userid+"&uploadpeolpe="+uploadpeople;
+                    String url= ConstantValues.SERVER_IP_NEW+"makeSureGetUpload?userId="+userid+"&uploadpeolpe="+ finalUploadpeople;
                     StringRequest stringRequest = new StringRequest(url,
                             new Response.Listener<String>() {
                                 @Override
@@ -171,11 +176,11 @@ public class AlarmActivity extends MvpActivity<AlarmPresenter> implements AlarmV
                                     try {
                                         JSONObject jsonObject=new JSONObject(response);
                                         int errorCode=jsonObject.getInt("errorCode");
-                                                if(errorCode==0){
-                                                    T.showShort(mContext,"已回复");
-                                                }else{
-                                                    T.showShort(mContext,"失败");
-                                                }
+                                        if(errorCode==0){
+                                            T.showShort(mContext,"已回复");
+                                        }else{
+                                            T.showShort(mContext,"失败");
+                                        }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         T.showShort(mContext,"设置失败");

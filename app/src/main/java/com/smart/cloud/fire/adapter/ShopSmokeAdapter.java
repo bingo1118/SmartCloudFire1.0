@@ -198,7 +198,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     customizeDialog.show();
                 }
             });
-            if(devType==18||devType==82){
+            if(devType==18||devType==82||devType==90){
                 ((ItemViewHolder) holder).state_name_tv.setVisibility(View.VISIBLE);
                 ((ItemViewHolder) holder).state_tv.setVisibility(View.VISIBLE);
                 if(normalSmoke.getElectrState()==1){
@@ -333,6 +333,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                     ((ItemViewHolder) holder).right_into_image.setVisibility(View.GONE);
                     break;
+                case 92://@@金特莱南京烟感
                 case 57://@@
                 case 55://@@嘉德烟感
                 case 31://@@12.26 三江iot烟感
@@ -368,6 +369,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         }
                     });
                     break;
+                case 93://金特莱南京燃气
                 case 16://@@9.29
                 case 2://燃气。。
                     if (netStates == 0) {//设备不在线。。
@@ -400,6 +402,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                     ((ItemViewHolder) holder).right_into_image.setVisibility(View.GONE);
                     break;
+                case 91://金特莱南京烟感
                 case 53://NB电气
                 case 52://@@Lara电气设备
                 case 5://电气。。
@@ -543,6 +546,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     });
                     break;
                 case 125:
+                case 94://金特莱南京水压
                 case 78:
                 case 70:
                 case 68:
@@ -606,8 +610,9 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     });
                     break;
                 case 124:
-                case 85:
+                case 95://金特莱南京水位
                 case 69:
+                case 85:
                 case 48:
                 case 46:
                 case 44://万科水位
@@ -642,6 +647,7 @@ public class ShopSmokeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                     ((ItemViewHolder) holder).right_into_image.setVisibility(View.GONE);
                     break;
+                case 90://南京喷淋
                 case 82://NB直连喷淋
                 case 18://喷淋@@10.31
                     if (netStates == 0) {//设备不在线。。

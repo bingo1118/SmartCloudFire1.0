@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.zxing.common.StringUtils;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.message.GTCmdMessage;
@@ -81,7 +82,12 @@ public class DemoIntentService extends GTIntentService {
         boolean showDateChange=false;
         try {
             JSONObject dataJson = new JSONObject(msg);
-            String alarmTime=dataJson.getString("alarmTime");
+            String alarmTime=null;
+            if(dataJson.has("alarmTime")){
+                alarmTime=dataJson.getString("alarmTime");
+            }else if(dataJson.has("masterFault")){
+                alarmTime=dataJson.getJSONObject("masterFault").getString("faultTime");
+            }
             int pushStatus = 0;
             if(dataJson.has("pushStatus")){
                 pushStatus=dataJson.getInt("pushStatus");
@@ -92,7 +98,10 @@ public class DemoIntentService extends GTIntentService {
                 return;
             }
 
-            int alarm = dataJson.getInt("alarmType");
+            int alarm =0;
+            if(dataJson.has("alarmType")){
+                alarm = dataJson.getInt("alarmType");
+            }
             if(alarm==80){
                 Intent wiredIntent = new Intent(context, WorkingTimeActivity.class);
                 wiredIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -161,6 +170,11 @@ public class DemoIntentService extends GTIntentService {
                 case 86://塞特维尔南京烟感
                 case 87://三江HN388烟感
                 case 89://塞特维尔移动烟感
+                case 90:
+                case 92:
+                case 93:
+                case 94:
+                case 95:
                 case 111://@@小主机，终端
                 case 119://联动烟感
                 case 124://@@外接水位
@@ -210,6 +224,7 @@ public class DemoIntentService extends GTIntentService {
                             }
                             break;
                         case 119:
+                        case 92:
                         case 89:
                         case 87:
                         case 86:
@@ -263,6 +278,7 @@ public class DemoIntentService extends GTIntentService {
                             }
                             break;
                         case 124:
+                        case 95:
                         case 85:
                         case 69:
                         case 48:
@@ -292,6 +308,7 @@ public class DemoIntentService extends GTIntentService {
                                 message="发生未知类型报警";
                             }
                             break;
+                        case 90:
                         case 82:
                         case 18://@@10.31 喷淋
                             if(alarmType==202||alarmType==66||alarmType==203) {
@@ -323,6 +340,7 @@ public class DemoIntentService extends GTIntentService {
                                 message="发生未知类型报警";
                             }
                             break;
+                        case 93:
                         case 73:
                         case 72:
                         case 51:
@@ -376,6 +394,7 @@ public class DemoIntentService extends GTIntentService {
                             }
                             break;
                         case 125:
+                        case 94:
                         case 78:
                         case 70:
                         case 68:
@@ -420,6 +439,7 @@ public class DemoIntentService extends GTIntentService {
                         context.startActivity(intent1);
                     }
                     break;
+                case 91:
                 case 83://南京中电电气
                 case 81://lora优特电气
                 case 80://南京优特电气

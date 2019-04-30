@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import com.smart.cloud.fire.activity.AddDev.AddDevActivity;
 import com.smart.cloud.fire.activity.AddNFC.AddNFCActivity;
 import com.smart.cloud.fire.global.DeviceType;
+import com.smart.cloud.fire.utils.JsonUtils;
 import com.smart.cloud.fire.utils.TestAuthorityUtil;
 
 import net.sourceforge.zbar.Config;
@@ -71,6 +72,7 @@ public class AddCaptureActivity  extends Activity implements View.OnClickListene
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         findViewById();
         testCameraOpen();
+
         //initViews();
     }
 
@@ -96,48 +98,30 @@ public class AddCaptureActivity  extends Activity implements View.OnClickListene
                 break;
             case R.id.light_btn:
                 if (lightStatus) { // 关闭手电筒
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        try {
-                            manager.setTorchMode("0", false);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        if (mCamera != null) {
-//                            mCamera.stopPreview();
-//                            mCamera.release();
-                            final Camera.Parameters parameter = mCamera.getParameters();
-                            parameter.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                            mCamera.setParameters(parameter);
-//                            mCamera = null;
-                        }
+                    if (mCamera != null) {
+                        final Camera.Parameters parameter = mCamera.getParameters();
+                        parameter.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                        mCamera.setParameters(parameter);
                     }
                     lightStatus=false;
                 } else { // 打开手电筒
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        try {
-                            manager.setTorchMode("0", true);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        final PackageManager pm = getPackageManager();
-                        final FeatureInfo[] features = pm.getSystemAvailableFeatures();
-                        for (final FeatureInfo f : features) {
-                            if (PackageManager.FEATURE_CAMERA_FLASH.equals(f.name)) { // 判断设备是否支持闪光灯
-                                if (null == mCamera) {
-                                    mCamera = Camera.open();
-                                }
-                                final Camera.Parameters parameters = mCamera.getParameters();
-                                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                                mCamera.setParameters(parameters);
-                                mCamera.startPreview();
+                    final PackageManager pm = getPackageManager();
+                    final FeatureInfo[] features = pm.getSystemAvailableFeatures();
+                    for (final FeatureInfo f : features) {
+                        if (PackageManager.FEATURE_CAMERA_FLASH.equals(f.name)) { // 判断设备是否支持闪光灯
+                            if (null == mCamera) {
+                                mCamera = Camera.open();
                             }
+                            final Camera.Parameters parameters = mCamera.getParameters();
+                            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                            mCamera.setParameters(parameters);
+                            mCamera.startPreview();
                         }
-                        lightStatus=true;
                     }
-                    break;
+                    lightStatus=true;
                 }
+                break;
+
         }
     }
 
@@ -237,7 +221,12 @@ public class AddCaptureActivity  extends Activity implements View.OnClickListene
                 }
             }
 
+
             if (!TextUtils.isEmpty(resultStr)&&!ifGetData) {
+                String temp= JsonUtils.isJson(resultStr);
+                if(temp!=null){
+                    resultStr=temp;
+                }
                 DeviceType devType=getDevType(resultStr);
                 Intent intent=new Intent(mContext,AddDevActivity.class);
                 intent.putExtra("devType",devType.getDeviceName());
@@ -479,5 +468,5 @@ public class AddCaptureActivity  extends Activity implements View.OnClickListene
             }
         }
         return new DeviceType(deviceType,deviceName);
-        }
     }
+}

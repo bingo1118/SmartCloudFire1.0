@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
+import com.google.gson.JsonObject;
 import com.jakewharton.rxbinding.view.RxView;
 import com.obsessive.zbar.CaptureActivity;
 import com.smart.cloud.fire.GetLocationActivity;
@@ -38,10 +39,14 @@ import com.smart.cloud.fire.global.MyApp;
 import com.smart.cloud.fire.global.ShopType;
 import com.smart.cloud.fire.mvp.fragment.MapFragment.Camera;
 import com.smart.cloud.fire.mvp.fragment.MapFragment.Smoke;
+import com.smart.cloud.fire.utils.JsonUtils;
 import com.smart.cloud.fire.utils.SharedPreferencesManager;
 import com.smart.cloud.fire.utils.T;
 import com.smart.cloud.fire.utils.Utils;
 import com.smart.cloud.fire.view.XCDropDownListView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -491,6 +496,10 @@ public class ConfireFireFragment extends MvpFragment<ConfireFireFragmentPresente
                         if(scanResult.contains("-")){
                             scanResult=scanResult.substring(scanResult.lastIndexOf("=")+1);
                         }//@@12.26三江nb-iot烟感
+                        String temp= JsonUtils.isJson(scanResult);
+                        if(temp!=null){
+                            scanResult=temp;
+                        }
                         addFireMac.setText(scanResult);
                         clearText();
                         mvpPresenter.getOneSmoke(userID, privilege + "", scanResult);//@@5.5如果添加过该烟感则显示出原来的信息
@@ -557,6 +566,7 @@ public class ConfireFireFragment extends MvpFragment<ConfireFireFragmentPresente
         }
 
     }
+
 
     /**
      * 清空其他编辑框内容。。
@@ -655,8 +665,7 @@ public class ConfireFireFragment extends MvpFragment<ConfireFireFragmentPresente
         String deviceType="";
         String macStr = (String) smokeMac.subSequence(0, 1);
         if(smokeMac.length()==15){
-//            deviceType="14";//GPS
-            deviceType="41";//海曼NB
+            deviceType="86";
         }else if (smokeMac.length()==6){
             deviceType="70";//恒星水压
         }else if (smokeMac.length()==7){
