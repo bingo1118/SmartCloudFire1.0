@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
-import com.google.gson.JsonObject;
 import com.jakewharton.rxbinding.view.RxView;
 import com.obsessive.zbar.CaptureActivity;
 import com.smart.cloud.fire.GetLocationActivity;
@@ -39,14 +38,12 @@ import com.smart.cloud.fire.global.MyApp;
 import com.smart.cloud.fire.global.ShopType;
 import com.smart.cloud.fire.mvp.fragment.MapFragment.Camera;
 import com.smart.cloud.fire.mvp.fragment.MapFragment.Smoke;
+import com.smart.cloud.fire.utils.IntegerTo16;
 import com.smart.cloud.fire.utils.JsonUtils;
 import com.smart.cloud.fire.utils.SharedPreferencesManager;
 import com.smart.cloud.fire.utils.T;
 import com.smart.cloud.fire.utils.Utils;
 import com.smart.cloud.fire.view.XCDropDownListView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -109,6 +106,8 @@ public class ConfireFireFragment extends MvpFragment<ConfireFireFragmentPresente
     TextView device_type_name;
     @Bind(R.id.photo_image)
     ImageView photo_image;//@@拍照上传
+    @Bind(R.id.yc_mac)
+    TextView yc_mac;
 
     private Context mContext;
     private int scanType = 0;//0表示扫描中继器，1表示扫描烟感
@@ -176,9 +175,28 @@ public class ConfireFireFragment extends MvpFragment<ConfireFireFragmentPresente
     }
 
     private void init() {
+        Intent intent=getActivity().getIntent();
+        String mac=intent.getStringExtra("mac");
+        devType=intent.getIntExtra("devType",0)+"";
         addFireMac.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                if(devType.equals("221")&&!hasFocus){
+                    String temp=addFireMac.getText().toString();
+                    if(temp.length()!=12){
+                        T.showShort(mContext,"用传设备MAC长度必须为12位数字");
+                        return;
+                    }
+                    if(!Utils.isNumeric(temp)){
+                        T.showShort(mContext,"用传设备MAC长度必须为12位数字");
+                        return;
+                    }
+                    yc_mac.setText("您输入的设备码:"+temp);
+
+                    temp=changeYongChuanMac(temp);
+                    addFireMac.setText("A"+temp.toUpperCase());
+                    T.showShort(mContext,"用传设备MAC转换成功");
+                }
                 if (!hasFocus&&addFireMac.getText().toString().length()>0) {
                     mvpPresenter.getOneSmoke(userID, privilege + "", addFireMac.getText().toString());//@@5.5如果添加过该烟感则显示出原来的信息
                 }
@@ -193,9 +211,6 @@ public class ConfireFireFragment extends MvpFragment<ConfireFireFragmentPresente
                 addFire();
             }
         });
-        Intent intent=getActivity().getIntent();
-        String mac=intent.getStringExtra("mac");
-        String devType=intent.getStringExtra("devType");
         if (mac!=null){
             addFireMac.setText(mac);
             device_type_name.setVisibility(View.VISIBLE);
@@ -222,6 +237,19 @@ public class ConfireFireFragment extends MvpFragment<ConfireFireFragmentPresente
             }
         });
 
+    }
+
+    private String changeYongChuanMac(String temp) {
+        String s="";
+        String[] ss=new String[6];//等长切分
+        for(int i=0;i<temp.length();i+=2){
+            ss[i/2]=temp.substring(i,i+2);
+        }
+        for (String each:ss) {
+            String t=Integer.toHexString(Integer.parseInt(each));
+            s=(t.length()==2?t:"0"+t)+s;
+        }
+        return s;
     }
 
     /**
@@ -567,7 +595,6 @@ public class ConfireFireFragment extends MvpFragment<ConfireFireFragmentPresente
 
     }
 
-
     /**
      * 清空其他编辑框内容。。
      */
@@ -665,7 +692,8 @@ public class ConfireFireFragment extends MvpFragment<ConfireFireFragmentPresente
         String deviceType="";
         String macStr = (String) smokeMac.subSequence(0, 1);
         if(smokeMac.length()==15){
-            deviceType="86";
+//            deviceType="14";//GPS
+            deviceType="41";//海曼NB
         }else if (smokeMac.length()==6){
             deviceType="70";//恒星水压
         }else if (smokeMac.length()==7){

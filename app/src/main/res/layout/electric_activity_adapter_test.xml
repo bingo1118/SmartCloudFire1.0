@@ -18,7 +18,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             />
-        <TextView
+        <com.smart.cloud.fire.view.SingleLineZoomTextView
             android:id="@+id/electric_alarm_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

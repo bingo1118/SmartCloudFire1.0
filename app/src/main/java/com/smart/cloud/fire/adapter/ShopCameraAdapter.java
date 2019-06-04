@@ -100,7 +100,7 @@ public class ShopCameraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     mContext.startActivity(intent);
                 }
             });
-            if (camera.getIsOnline() == 0&&camera.getVideoType()==0) {//设备不在线。。
+            if (camera.getIsOnline() == 0&&camera.getCameraId().length()<10) {//设备不在线。。
                 ((ItemViewHolder) holder).smoke_name_text.setText("摄像机："+camera.getCameraName()+"（已离线)");
                 ((ItemViewHolder) holder).smoke_name_text.setTextColor(Color.RED);
             } else {//设备在线。。
@@ -122,7 +122,7 @@ public class ShopCameraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     mContact.apModeState = 1;
 
                     Intent monitor = new Intent();
-                    if(camera.getVideoType()==0){
+                    if(camera.getCameraId().length()<10){
                         monitor.setClass(mContext, ApMonitorActivity.class);
                     }else{
                         monitor.setClass(mContext, PreviewActivity.class);

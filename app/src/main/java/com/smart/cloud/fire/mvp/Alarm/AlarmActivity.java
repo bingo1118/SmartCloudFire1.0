@@ -96,6 +96,8 @@ public class AlarmActivity extends MvpActivity<AlarmPresenter> implements AlarmV
     ImageView alarm_tb_image;
     @Bind(R.id.makesure_getalarm)
     Button makesure_getalarm;
+    @Bind(R.id.alarm_devname)
+    TextView alarm_devname;
 
     private Context mContext;
     private PushAlarmMsg mPushAlarmMsg;
@@ -229,40 +231,15 @@ public class AlarmActivity extends MvpActivity<AlarmPresenter> implements AlarmV
             mAlarmType.setTextColor(getResources().getColor(R.color.hj_color_text));
             if(pushWiredSmokeAlarmMsg.getFaultCode().equals("0")){
                 mAlarmType.setText("主机发生:"+pushWiredSmokeAlarmMsg.getFaultDevDesc());
-                alarmMac.setText("mac:"+pushWiredSmokeAlarmMsg.getRepeater());//@@2018.01.03
+                alarmMac.setText("ID:"+pushWiredSmokeAlarmMsg.getRepeater());//@@2018.01.03
             }else{
                 mAlarmType.setText(this.alarmMsg);
             }
 
+            alarm_devname.setVisibility(View.VISIBLE);
+            alarm_devname.setText("名称:"+pushWiredSmokeAlarmMsg.getNamed());
 
-//        switch (devType) {
-//            case 1:
-//
-//                break;
-//            case 2:
-//                alarmFkImg.setBackgroundResource(R.drawable.allarm_bg_selector);
-//                mAlarmType.setTextColor(getResources().getColor(R.color.hj_color_text));
-//                mAlarmType.setText(alarmMsg);
-//                break;
-//            case 5:
-//                alarmFkImg.setBackgroundResource(R.drawable.allarm_bg_selector);
-//                mAlarmType.setTextColor(getResources().getColor(R.color.hj_color_text));
-//                mAlarmType.setText(alarmMsg);
-//                break;
-//            default:
-//                break;
-//        }
             alarmInit();//imageview动画设置。。
-//            RxView.clicks(alarmLeadToBtn).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
-//                @Override
-//                public void call(Void aVoid) {
-//                    Smoke mNormalSmoke = new Smoke();
-//                    mNormalSmoke.setLongitude(mPushAlarmMsg.getLongitude() + "");
-//                    mNormalSmoke.setLatitude(mPushAlarmMsg.getLatitude() + "");
-//                    Reference<Activity> reference = new WeakReference(mContext);
-//                    new InitBaiduNavi(reference.get(), mNormalSmoke);//导航
-//                }
-//            });
         }else{
             if(mPushAlarmMsg.getDeviceType()==58||mPushAlarmMsg.getDeviceType()==61){
                 deal_voice_btn.setVisibility(View.VISIBLE);
@@ -339,7 +316,7 @@ public class AlarmActivity extends MvpActivity<AlarmPresenter> implements AlarmV
             smokeMarkPhoneTv.setText(mPushAlarmMsg.getPrincipal2Phone());
             alarmInfo.setText(mPushAlarmMsg.getPlaceAddress() + mPushAlarmMsg.getAddress());
             alarmTime.setText(mPushAlarmMsg.getAlarmTime());
-            alarmMac.setText("Mac:"+mPushAlarmMsg.getMac());//@@2018.01.03
+            alarmMac.setText("ID:"+mPushAlarmMsg.getMac());//@@2018.01.03
 //        int devType = mPushAlarmMsg.getDeviceType();
             alarmFkImg.setBackgroundResource(R.drawable.allarm_bg_selector);
             mAlarmType.setTextColor(getResources().getColor(R.color.hj_color_text));

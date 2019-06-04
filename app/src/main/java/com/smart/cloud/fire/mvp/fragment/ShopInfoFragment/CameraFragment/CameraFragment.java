@@ -228,7 +228,12 @@ public class CameraFragment extends MvpFragment<ShopInfoFragmentPresenter> imple
 
         String[] cameralist=new String[smokeList.size()];//@@10.18
         for(int i=0;i<smokeList.size();i++){
-            cameralist[i]=((List<Camera>)smokeList).get(i).getCameraId();
+            Camera camera=(Camera) smokeList.get(i);
+            if(0==camera.getVideoType()){
+                cameralist[i]=camera.getCameraId().length()>10?"0":camera.getCameraId();
+            }else{
+                cameralist[i]="0";
+            }
         }//@@10.18
         P2PHandler.getInstance().getFriendStatus(cameralist);//@@10.18
     }

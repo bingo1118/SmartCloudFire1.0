@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.smart.cloud.fire.global.ElectricValue;
 import com.smart.cloud.fire.mvp.electric.ElectricPresenter;
+import com.smart.cloud.fire.view.SingleLineZoomTextView;
 
 import java.util.List;
 
@@ -318,7 +319,7 @@ public class ElectricActivityAdapterTest extends RecyclerView.Adapter<RecyclerVi
         @Bind(R.id.electric_name)
         TextView electricName;
         @Bind(R.id.electric_alarm_value)
-        TextView electricAlarmValue;
+        SingleLineZoomTextView electricAlarmValue;
         @Bind(R.id.electric_current_value)
         TextView electricCurrentValue;
         @Bind(R.id.electric_states)

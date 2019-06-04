@@ -472,6 +472,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                     break;
                 case 91:
+                case 88:
                 case 83://南京中电电气
                 case 81:
                 case 80://南京优特电气
@@ -589,6 +590,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     ((ItemViewHolder) holder).smokeMac.setTextColor(mContext.getResources().getColor(R.color.hj_color_text));
                     ((ItemViewHolder) holder).smokeMacTv.setTextColor(mContext.getResources().getColor(R.color.hj_color_text));
                     break;
+                case 84:
                 case 8:
                     ((ItemViewHolder) holder).smokeMac.setText("手报探测器:");
                     if(alarmType == 193){

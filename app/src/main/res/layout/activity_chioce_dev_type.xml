@@ -228,6 +228,27 @@
                     android:gravity="center"
                     android:textSize="16sp"/>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/yongchuan_lin"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/spjk_lin"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/yongchuan_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/add_zj_selector"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="用传设备"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:textSize="16sp"/>
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 

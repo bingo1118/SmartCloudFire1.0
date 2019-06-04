@@ -169,6 +169,7 @@
                         android:text="(0-100℃)"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/currentMAX_line"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"

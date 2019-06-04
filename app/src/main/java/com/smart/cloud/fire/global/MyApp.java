@@ -16,6 +16,7 @@ import android.widget.RemoteViews;
 import com.baidu.mapapi.SDKInitializer;
 import com.hikvision.open.hikvideoplayer.HikVideoPlayerFactory;
 import com.p2p.core.update.UpdateManager;
+import com.smart.cloud.fire.mvp.main.MainActivity;
 import com.smart.cloud.fire.service.LocationService;
 import com.smart.cloud.fire.ui.ForwardDownActivity;
 import com.smart.cloud.fire.utils.CrashHandler;
@@ -41,6 +42,49 @@ public class MyApp extends Application {
     public LocationService locationService;
     public Vibrator mVibrator;
 
+
+    /**
+     * 创建挂机图标
+     */
+    @SuppressWarnings("deprecation")
+    public void showNotification() {
+        boolean isShowNotify = SharedPreferencesManager.getInstance()
+                .getIsShowNotify(this);
+        if (isShowNotify) {
+            mNotificationManager = getNotificationManager();
+            mNotification = new Notification();
+
+            long when = System.currentTimeMillis();
+            mNotification = new Notification(R.mipmap.ic_launcher, this
+                    .getResources().getString(R.string.app_name), when);
+
+            // 放置在"正在运行"栏目中
+            mNotification.flags = Notification.FLAG_ONGOING_EVENT;
+
+            RemoteViews contentView = new RemoteViews(getPackageName(),
+                    R.layout.notify_status_bar);
+            contentView.setImageViewResource(R.id.icon, R.mipmap.ic_launcher);
+            contentView.setTextViewText(
+                    R.id.title,
+                    this.getResources().getString(R.string.app_name)
+                            + " "
+                            + this.getResources().getString(
+                            R.string.running_in_the_background));
+            // contentView.setTextViewText(R.id.text, "");
+            // contentView.setLong(R.id.time, "setTime", when);
+            // 指定个性化视图
+            mNotification.contentView = contentView;
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            // 指定内容意图
+            mNotification.contentIntent = contentIntent;
+            mNotificationManager.notify(R.string.app_name, mNotification);
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -52,10 +96,13 @@ public class MyApp extends Application {
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);
         //检查内存是否泄漏初始化，正式版应该关闭
-        LeakCanary.install(this);
+//        if (!LeakCanary.isInAnalyzerProcess(this)) {
+//            LeakCanary.install(this);
+//        }
         LitePal.initialize(this);//数据库框架
         SQLiteDatabase db = LitePal.getDatabase();
         HikVideoPlayerFactory.initLib(null, true);
+        showNotification();
     }
 
     @Override

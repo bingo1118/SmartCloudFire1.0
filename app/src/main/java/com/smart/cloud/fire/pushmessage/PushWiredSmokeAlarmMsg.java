@@ -13,6 +13,7 @@ public class PushWiredSmokeAlarmMsg implements Serializable {
     private String faultTime;
     private String faultType;
     private String repeater;
+    private String named;
 
     public String getFaultCode() {
         return faultCode;
@@ -60,5 +61,13 @@ public class PushWiredSmokeAlarmMsg implements Serializable {
 
     public void setRepeater(String repeater) {
         this.repeater = repeater;
+    }
+
+    public String getNamed() {
+        return named;
+    }
+
+    public void setNamed(String named) {
+        this.named = named;
     }
 }

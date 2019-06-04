@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.smart.cloud.fire.activity.AddNFC.AddNFCMacActivity;
 import com.smart.cloud.fire.activity.ChuangAnWifiSet.ChuanganWifiStep1Activity;
 import com.smart.cloud.fire.activity.UploadNFCInfo.UploadNFCInfoActivity;
+import com.smart.cloud.fire.activity.Video.RecordVideoActivity;
 import com.smart.cloud.fire.base.ui.MvpFragment;
 import com.smart.cloud.fire.global.ConstantValues;
 import com.smart.cloud.fire.global.MyApp;
@@ -150,7 +151,7 @@ public class SettingFragment extends MvpFragment<SettingFragmentPresenter> imple
 //                getActivity().startActivity(intent11);
 //                break;
             case R.id.app_update:
-                if(ConstantValues.SERVER_IP_NEW.equals("http://119.29.155.148:51091/fireSystem/")){
+                if(ConstantValues.IFUPDATE==1){
                     mvpPresenter.checkUpdate(mContext);
                 }else{
                     T.showShort(mContext,"该版本不支持版本更新");
@@ -176,7 +177,7 @@ public class SettingFragment extends MvpFragment<SettingFragmentPresenter> imple
             case R.id.setting_help_exit:
                 Intent in = new Intent();
                 in.setAction("APP_EXIT");
-                in.setPackage("fire.cloud.smart.com.smartcloudfire");//@@7.13只传当前应用
+                in.setPackage(MyApp.app.getPackageName());//@@7.13只传当前应用
                 mContext.sendBroadcast(in);
                 getActivity().finish();//@@7.17
                 break;

@@ -440,6 +440,7 @@ public class DemoIntentService extends GTIntentService {
                     }
                     break;
                 case 91:
+                case 88:
                 case 83://南京中电电气
                 case 81://lora优特电气
                 case 80://南京优特电气
@@ -734,6 +735,7 @@ public class DemoIntentService extends GTIntentService {
         mPushAlarmMsg.setFaultTime(dataJson.getString("faultTime"));
         mPushAlarmMsg.setFaultType(dataJson.getString("faultType"));
         mPushAlarmMsg.setRepeater(dataJson.getString("repeater"));
+        mPushAlarmMsg.setNamed(dataJson.getString("named"));
         return mPushAlarmMsg;
     }
 

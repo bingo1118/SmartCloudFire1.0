@@ -172,7 +172,7 @@ public class ElectricFragmentAdapter extends RecyclerView.Adapter<RecyclerView.V
                     final int privilege = MyApp.app.getPrivilege();
                     final int eleState = normalSmoke.getElectrState();
                     //if(privilege==3){//@@8.28权限3有切换电源功能
-                    if(devType!=80&&devType!=81&&devType!=83){
+                    if(devType!=80&&devType!=81&&devType!=83&&devType!=88){
                         switch (eleState){
                             case 1:
                                 ((ItemViewHolder) holder).power_button.setVisibility(View.VISIBLE);

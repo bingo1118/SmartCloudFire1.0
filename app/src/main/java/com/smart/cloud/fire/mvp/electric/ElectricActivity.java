@@ -90,6 +90,7 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
     private String yuzhi47n="0";
 
     private ElectricEnergyEntity energyEntity;
+    private int uploaddatatime=0;//设备数据上报时间
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,12 +131,12 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
             MenuItem item=popupMenu.getMenu().findItem(R.id.electr_yuzhi_set);
             item.setVisible(false);
         }
-        if(!(devType==83||devType==80||devType==81)){
+        if(!(devType==83||devType==80||devType==81||devType==88)){
             MenuItem item=popupMenu.getMenu().findItem(R.id.fenli);
             item=popupMenu.getMenu().findItem(R.id.race);
             item.setVisible(false);
         }
-        if(devType!=83){
+        if(!(devType==83)){
             MenuItem item=popupMenu.getMenu().findItem(R.id.electr_yuzhi_set_zd);
             item.setVisible(false);
             item=popupMenu.getMenu().findItem(R.id.electr_yuzhi_set_refresh);
@@ -145,7 +146,12 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
             MenuItem item=popupMenu.getMenu().findItem(R.id.yuzhi_set);
             item.setVisible(false);
         }
-        if(!(devType==80||devType==81)){
+        if(devType==88){
+            MenuItem item=popupMenu.getMenu().findItem(R.id.utfenli);
+            item.setVisible(false);
+            getYuzhi();
+        }
+        if(!(devType==80||devType==81||devType==88)){
             MenuItem item=popupMenu.getMenu().findItem(R.id.fenli);
             item.setVisible(false);
             item=popupMenu.getMenu().findItem(R.id.utfenli);
@@ -158,7 +164,7 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
             MenuItem item=popupMenu.getMenu().findItem(R.id.change_history);
             item.setVisible(false);
         }
-        if(devType!=81){
+        if(!(devType==81||devType==88)){
             MenuItem item=popupMenu.getMenu().findItem(R.id.restart);
             item.setVisible(false);
             item=popupMenu.getMenu().findItem(R.id.heartime_set);
@@ -437,7 +443,6 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
                             +"&Temperature="+value47
                             +"&ShuntRelevance="+b;
 
-
                 }catch(Exception e){
                     e.printStackTrace();
                     T.showShort(mContext,"输入数据不完全或有误");
@@ -603,6 +608,38 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
         mQueue.add(jsonObjectRequest);
     }
 
+    //获取中电设备上报数据时间
+    private void getYuzhi() {
+        VolleyHelper helper=VolleyHelper.getInstance(mContext);
+        final RequestQueue mQueue = helper.getRequestQueue();
+//        RequestQueue mQueue = Volley.newRequestQueue(context);
+        String url= ConstantValues.SERVER_IP_NEW+"getWaterAlarmThreshold?mac="+electricMac+"&deviceType="+devType;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            int errorCode=response.getInt("errorCode");
+                            if(errorCode==0){
+                                try {
+                                    uploaddatatime=response.getInt("waveValue");
+                                }catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                T.showShort(mContext,"网络错误");
+            }
+        });
+        mQueue.add(jsonObjectRequest);
+    }
+
     public void getFenli(String mac){
         VolleyHelper helper=VolleyHelper.getInstance(mContext);
         String url=ConstantValues.SERVER_IP_NEW+"getOneEnergyEntity?userId=13622215085&devType=80&privilege=4&smokeMac="+mac;
@@ -663,7 +700,12 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
 
     public void gotoSetting(){
         LayoutInflater inflater = getLayoutInflater();
-        View layout= inflater.inflate(R.layout.ut_electr_threshold_setting,(ViewGroup) findViewById(R.id.rela));
+        View layout;
+        if(devType==88){
+            layout= inflater.inflate(R.layout.electr_threshold_setting_zd_lora,(ViewGroup) findViewById(R.id.rela));
+        }else{
+            layout= inflater.inflate(R.layout.ut_electr_threshold_setting,(ViewGroup) findViewById(R.id.rela));
+        }
 
         AlertDialog.Builder builder=new AlertDialog.Builder(mContext).setView(layout);
         final AlertDialog dialog =builder.create();
@@ -682,6 +724,11 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
         final Switch fenli_switch=(Switch)layout.findViewById(R.id.fenli_switch);
         final LinearLayout fenliHoldTime_line=(LinearLayout) layout.findViewById(R.id.fenliHoldTime_line);
         final EditText fenliHoldTime_value=(EditText)layout.findViewById(R.id.fenliHoldTime_value);
+        final LinearLayout currentMAX_line=(LinearLayout)layout.findViewById(R.id.currentMAX_line);
+        if(devType==88){
+            fenli_switch.setVisibility(View.GONE);
+            currentMAX_line.setVisibility(View.GONE);
+        }
         if(energyEntity.getShuntRelevanceTime()>0){
             fenli_switch.setChecked(true);
             fenliHoldTime_value.setText(energyEntity.getShuntRelevanceTime()+"");
@@ -733,30 +780,58 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
                     int value46=(int)Float.parseFloat(Leakage_value.getText().toString());
                     int value47=(int)Float.parseFloat(temperature_value.getText().toString());
 
-                    if(low<145||low>220){
-                        T.showShort(mContext,"欠压阈值设置范围为145-220V");
-                        return;
+                    if(devType==88){
+                        if(low<66||low>208){
+                            T.showShort(mContext,"欠压阈值设置范围为66-208V");
+                            return;
+                        }
+                        if(high<220||high>329){
+                            T.showShort(mContext,"过压阈值设置范围为220-329V");
+                            return;
+                        }
+                        if(value45<1||value45>800){
+                            T.showShort(mContext,"过流阈值设置范围为1-800A");
+                            return;
+                        }
+                        if(value46<20||value46>2000){
+                            T.showShort(mContext,"漏电流阈值设置范围为20-2000mA");
+                            return;
+                        }
+                        if(value47<45||value47>140){
+                            T.showShort(mContext,"温度阈值设置范围为45-140℃");
+                            return;
+                        }
+                        if(low>high){
+                            T.showShort(mContext,"欠压阈值不能高于过压阈值");
+                            return;
+                        }
+                    }else{
+                        if(low<145||low>220){
+                            T.showShort(mContext,"欠压阈值设置范围为145-220V");
+                            return;
+                        }
+                        if(high<220||high>280){
+                            T.showShort(mContext,"过压阈值设置范围为220-280V");
+                            return;
+                        }
+                        if(value45<1||value45>63){
+                            T.showShort(mContext,"过流阈值设置范围为1-63A");
+                            return;
+                        }
+                        if(value46<10||value46>1000){
+                            T.showShort(mContext,"漏电流阈值设置范围为10-1000mA");
+                            return;
+                        }
+                        if(value47>100){
+                            T.showShort(mContext,"温度阈值设置范围为0-100℃");
+                            return;
+                        }
+                        if(low>high){
+                            T.showShort(mContext,"欠压阈值不能高于过压阈值");
+                            return;
+                        }
                     }
-                    if(high<220||high>280){
-                        T.showShort(mContext,"过压阈值设置范围为220-280V");
-                        return;
-                    }
-                    if(value45<1||value45>63){
-                        T.showShort(mContext,"过流阈值设置范围为1-63A");
-                        return;
-                    }
-                    if(value46<10||value46>1000){
-                        T.showShort(mContext,"漏电流阈值设置范围为10-1000mA");
-                        return;
-                    }
-                    if(value47>100){
-                        T.showShort(mContext,"温度阈值设置范围为0-100℃");
-                        return;
-                    }
-                    if(low>high){
-                        T.showShort(mContext,"欠压阈值不能高于过压阈值");
-                        return;
-                    }
+
 
                     int b=0;
                     if(fenli_switch.isChecked()&&fenliHoldTime_value.getText().length()>0){
@@ -977,15 +1052,20 @@ public class ElectricActivity extends MvpActivity<ElectricPresenter> implements 
         final AlertDialog dialog =builder.create();
 
         final EditText fenliHoldTime_value=(EditText)layout.findViewById(R.id.heartime_set);
+        fenliHoldTime_value.setText(uploaddatatime+"");
 
 
         Button commit=(Button)layout.findViewById(R.id.commit);
         commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String url="";
                 try{
                     int hearttime=Integer.parseInt(fenliHoldTime_value.getText().toString());
+                    if(hearttime<10||hearttime>600||hearttime%10!=0){
+                        T.showShort(mContext,"输入数据有误，10-600分钟，且为10的倍数");
+                    }
                     url= ConstantValues.SERVER_IP_NEW+"Telegraphy_Uool_control?repeaterMac="+repeatMac
                             +"&deviceType="+devType+"&devCmd=31&imei="+electricMac
                             +"&hearTime="+hearttime;

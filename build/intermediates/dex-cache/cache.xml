@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="D:\1226.1.0\4.15\SmartCloudFire\app\build\intermediates\transforms\desugar\release\0.jar"
+        jumboMode="false"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b3f23cd50616afffad9040ecb48ae01a9e005154">
+        <dex dex="D:\1226.1.0\4.15\SmartCloudFire\app\build\intermediates\transforms\preDex\release\1.jar" />
+    </item>
+
+</items>

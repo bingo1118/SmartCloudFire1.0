@@ -184,7 +184,9 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         IntentFilter filter = new IntentFilter();
         filter.addAction("Constants.Action.ACTION_UPDATE");
         mContext.registerReceiver(mReceiver, filter);
-        new MyTast().execute(mContext);//@@5.31
+        if(ConstantValues.IFUPDATE==1){
+            new MyTast().execute(mContext);//@@5.31
+        }
     }
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {//@@7.12
